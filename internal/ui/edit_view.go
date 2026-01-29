@@ -39,7 +39,8 @@ func (m Model) updateEditGroupSelect(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.cursor == len(groups) {
 				// 选择了"返回上一级"
 				m.state = MainMenuView
-				m.cursor = 0
+				groups := m.manager.GetGroups()
+				m.cursor = len(groups) + 1 + m.mainMenuActionIndex
 			} else {
 				// 选择了某个组合
 				m.editGroupName = groups[m.cursor].Name
