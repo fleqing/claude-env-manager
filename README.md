@@ -15,7 +15,34 @@
 
 ## 安装
 
-### 方式一：从源码编译
+### 方式一：从 GitHub Release 下载（推荐）
+
+1. 访问 [Releases 页面](https://github.com/fleqing/claude-env-manager/releases)
+2. 下载适合您系统的版本：
+   - **Linux (x86_64)**: `claude-env-manager-linux-amd64`
+   - **Linux (ARM64)**: `claude-env-manager-linux-arm64`
+   - **macOS (Intel)**: `claude-env-manager-darwin-amd64`
+   - **macOS (Apple Silicon)**: `claude-env-manager-darwin-arm64`
+   - **Windows (x86_64)**: `claude-env-manager-windows-amd64.exe`
+
+3. 添加执行权限并移动到系统路径（Linux/macOS）：
+
+```bash
+# 下载后添加执行权限
+chmod +x claude-env-manager-*
+
+# 移动到系统路径
+sudo mv claude-env-manager-* /usr/local/bin/claude-env-manager
+
+# 验证安装
+claude-env-manager --version
+```
+
+4. Windows 用户：
+   - 将 `.exe` 文件放到 PATH 环境变量包含的目录中
+   - 或直接双击运行
+
+### 方式二：从源码编译
 
 1. 克隆或下载此项目
 2. 安装依赖：
@@ -38,7 +65,7 @@ make install-bin
 
 安装后可以在任何位置直接使用 `claude-env-manager` 命令。
 
-### 方式二：直接运行
+### 方式三：直接运行
 
 ```bash
 make run
@@ -162,6 +189,73 @@ make build-mac
 # 编译所有平台
 make build-all
 ```
+
+## 开发者指南
+
+### 本地开发
+
+```bash
+# 克隆仓库
+git clone https://github.com/fleqing/claude-env-manager.git
+cd claude-env-manager
+
+# 安装依赖
+make install
+
+# 运行程序
+make run
+
+# 运行测试
+make test
+```
+
+### 构建
+
+```bash
+# 构建当前平台
+make build
+
+# 构建所有平台（用于发布）
+make build-release
+
+# 查看版本信息
+./bin/claude-env-manager --version
+```
+
+### 发布新版本
+
+1. 确保所有更改已提交到 main 分支
+2. 创建并推送版本标签：
+
+```bash
+# 创建标签（遵循语义化版本）
+git tag -a v1.0.0 -m "Release v1.0.0: Initial stable release"
+
+# 推送标签到远程仓库
+git push origin v1.0.0
+```
+
+3. GitHub Actions 将自动：
+   - 构建所有平台的可执行文件
+   - 生成 SHA256 校验和
+   - 创建 GitHub Release
+   - 上传所有构建产物
+
+4. 在 [Releases 页面](https://github.com/fleqing/claude-env-manager/releases) 查看发布结果
+
+### 版本规范
+
+本项目遵循 [语义化版本 2.0.0](https://semver.org/lang/zh-CN/)：
+
+- **MAJOR（主版本）**：不兼容的 API 变更
+- **MINOR（次版本）**：向后兼容的功能新增
+- **PATCH（修订版本）**：向后兼容的问题修复
+
+示例：
+- `v1.0.0` - 初始稳定版本
+- `v1.1.0` - 添加新功能
+- `v1.1.1` - 修复 bug
+- `v2.0.0` - 重大变更
 
 ## 许可
 
