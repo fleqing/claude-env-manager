@@ -2,6 +2,7 @@ package ui
 
 import (
 	"claude-env-manager/internal/manager"
+	"claude-env-manager/internal/speedtest"
 	"fmt"
 
 	"github.com/charmbracelet/bubbles/textinput"
@@ -23,6 +24,7 @@ const (
 	AddGroupInputView
 	DeleteGroupView
 	DeleteConfirmView
+	SpeedTestView
 )
 
 // InputField 输入字段类型
@@ -64,6 +66,10 @@ type Model struct {
 
 	// 确认相关
 	confirmAction string
+
+	// 测速相关
+	speedTestResults    map[string]speedtest.TestResult
+	speedTestInProgress bool
 }
 
 // NewModel 创建新的模型实例
@@ -92,6 +98,12 @@ func (m Model) Init() tea.Cmd {
 
 // Update 更新模型
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	// 处理测速消息（不受状态限制）
+	switch msg := msg.(type) {
+	case speedTestStartMsg, speedTestResultMsg:
+		return m.updateSpeedTest(msg)
+	}
+
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
@@ -125,6 +137,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m.updateDeleteGroup(msg)
 	case DeleteConfirmView:
 		return m.updateDeleteConfirm(msg)
+	case SpeedTestView:
+		return m.updateSpeedTest(msg)
 	}
 
 	return m, nil
@@ -153,6 +167,8 @@ func (m Model) View() string {
 		s = m.viewDeleteGroup()
 	case DeleteConfirmView:
 		s = m.viewDeleteConfirm()
+	case SpeedTestView:
+		s = m.viewSpeedTest()
 	}
 
 	// 显示消息或错误
@@ -169,7 +185,7 @@ func (m Model) View() string {
 // handleBack 处理返回上一级
 func (m Model) handleBack() Model {
 	switch m.state {
-	case ListGroupsView, SwitchGroupView, EditGroupSelectView, AddGroupView, DeleteGroupView:
+	case ListGroupsView, SwitchGroupView, EditGroupSelectView, AddGroupView, DeleteGroupView, SpeedTestView:
 		m.state = MainMenuView
 		// 恢复主菜单的光标位置
 		groups := m.manager.GetGroups()
@@ -195,3 +211,11 @@ func (m Model) handleBack() Model {
 	return m
 }
 
+// speedTestStartMsg 开始测速消息
+type speedTestStartMsg struct{}
+
+// speedTestResultMsg 测速结果消息
+type speedTestResultMsg struct {
+	groupName string
+	result    speedtest.TestResult
+}

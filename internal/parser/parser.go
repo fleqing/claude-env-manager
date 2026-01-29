@@ -11,7 +11,7 @@ import (
 
 var (
 	// 匹配注释行（组合名称）
-	commentPattern = regexp.MustCompile(`^#\s*(\w+)\s*$`)
+	commentPattern = regexp.MustCompile(`^#\s*(.+?)\s*$`)
 	// 匹配 BASE_URL 行
 	baseURLPattern = regexp.MustCompile(`^(#)?export\s+ANTHROPIC_BASE_URL=(.+)$`)
 	// 匹配 AUTH_TOKEN 行

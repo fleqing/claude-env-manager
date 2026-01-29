@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"claude-env-manager/internal/speedtest"
 	"fmt"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -9,6 +10,7 @@ import (
 // 主菜单操作选项（不包括组合列表，组合列表动态显示）
 var mainMenuOptions = []string{
 	"切换环境变量组合",
+	"测速",
 	"编辑组合",
 	"添加新组合",
 	"删除组合",
@@ -46,10 +48,19 @@ func (m Model) updateMainMenu(msg tea.Msg) (tea.Model, tea.Cmd) {
 			case 0: // 切换环境变量组合
 				m.state = SwitchGroupView
 				m.cursor = 0
-			case 1: // 编辑组合
+			case 1: // 测速
+				m.state = SpeedTestView
+				m.cursor = 0
+				m.speedTestResults = make(map[string]speedtest.TestResult)
+				m.speedTestInProgress = true
+				// 返回命令以启动测速
+				return m, func() tea.Msg {
+					return speedTestStartMsg{}
+				}
+			case 2: // 编辑组合
 				m.state = EditGroupSelectView
 				m.cursor = 0
-			case 2: // 添加新组合
+			case 3: // 添加新组合
 				m.state = AddGroupView
 				m.inputStep = 0
 				m.newGroupName = ""
@@ -59,10 +70,10 @@ func (m Model) updateMainMenu(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.textInput.SetValue("")
 				m.textInput.Placeholder = "请输入组合名称"
 				m.textInput.Focus() // 确保 textInput 获得焦点
-			case 3: // 删除组合
+			case 4: // 删除组合
 				m.state = DeleteGroupView
 				m.cursor = 0
-			case 4: // 退出
+			case 5: // 退出
 				return m, tea.Quit
 			}
 		}
