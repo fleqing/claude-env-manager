@@ -222,41 +222,6 @@ make build-release
 ./bin/claude-env-manager --version
 ```
 
-### 发布新版本
-
-1. 确保所有更改已提交到 main 分支
-2. 创建并推送版本标签：
-
-```bash
-# 创建标签（遵循语义化版本）
-git tag -a v1.0.0 -m "Release v1.0.0: Initial stable release"
-
-# 推送标签到远程仓库
-git push origin v1.0.0
-```
-
-3. GitHub Actions 将自动：
-   - 构建所有平台的可执行文件
-   - 生成 SHA256 校验和
-   - 创建 GitHub Release
-   - 上传所有构建产物
-
-4. 在 [Releases 页面](https://github.com/fleqing/claude-env-manager/releases) 查看发布结果
-
-### 版本规范
-
-本项目遵循 [语义化版本 2.0.0](https://semver.org/lang/zh-CN/)：
-
-- **MAJOR（主版本）**：不兼容的 API 变更
-- **MINOR（次版本）**：向后兼容的功能新增
-- **PATCH（修订版本）**：向后兼容的问题修复
-
-示例：
-- `v1.0.0` - 初始稳定版本
-- `v1.1.0` - 添加新功能
-- `v1.1.1` - 修复 bug
-- `v2.0.0` - 重大变更
-
 ## 许可
 
 MIT License
