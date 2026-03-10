@@ -6,7 +6,7 @@ BUILD_TIME ?= $(shell date -u '+%Y-%m-%d_%H:%M:%S')
 # 构建标志
 LDFLAGS := -ldflags "-X main.Version=$(VERSION) -X main.GitCommit=$(GIT_COMMIT) -X main.BuildTime=$(BUILD_TIME) -s -w"
 
-.PHONY: build run clean install test install-bin help build-linux build-mac build-all build-release
+.PHONY: build run clean install test test-coverage install-bin help build-linux build-mac build-all build-release
 
 help:
 	@echo "环境变量管理工具 (Go 版本) - 可用命令："
@@ -16,6 +16,7 @@ help:
 	@echo "  make install       - 安装依赖"
 	@echo "  make install-bin   - 将可执行文件安装到 /usr/local/bin (需要 sudo)"
 	@echo "  make test          - 运行测试"
+	@echo "  make test-coverage - 运行测试并生成覆盖率报告 (coverage.html)"
 	@echo "  make clean         - 清理构建文件"
 	@echo ""
 	@echo "当前版本: $(VERSION)"
@@ -37,8 +38,16 @@ install:
 test:
 	go test -v ./...
 
+test-coverage:
+	go test -coverprofile=coverage.out -covermode=atomic ./...
+	go tool cover -func=coverage.out
+	@echo ""
+	go tool cover -html=coverage.out -o coverage.html
+	@echo "✓ 覆盖率报告已生成: coverage.html"
+
 clean:
 	rm -rf bin/
+	rm -f coverage.out coverage.html
 	go clean
 
 install-bin:

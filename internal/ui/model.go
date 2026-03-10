@@ -1,8 +1,8 @@
 package ui
 
 import (
-	"claude-env-manager/internal/manager"
-	"claude-env-manager/internal/speedtest"
+	"github.com/fleqing/claude-env-manager/internal/manager"
+	"github.com/fleqing/claude-env-manager/internal/speedtest"
 	"fmt"
 
 	"github.com/charmbracelet/bubbles/textinput"

@@ -1,4 +1,4 @@
-module claude-env-manager
+module github.com/fleqing/claude-env-manager
 
 go 1.25.4
 

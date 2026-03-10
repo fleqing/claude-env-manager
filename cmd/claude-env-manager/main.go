@@ -1,9 +1,9 @@
 package main
 
 import (
-	"claude-env-manager/internal/config"
-	"claude-env-manager/internal/manager"
-	"claude-env-manager/internal/ui"
+	"github.com/fleqing/claude-env-manager/internal/config"
+	"github.com/fleqing/claude-env-manager/internal/manager"
+	"github.com/fleqing/claude-env-manager/internal/ui"
 	"flag"
 	"fmt"
 	"os"

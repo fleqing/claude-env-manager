@@ -1,7 +1,7 @@
 package ui
 
 import (
-	"claude-env-manager/internal/speedtest"
+	"github.com/fleqing/claude-env-manager/internal/speedtest"
 	"fmt"
 
 	tea "github.com/charmbracelet/bubbletea"

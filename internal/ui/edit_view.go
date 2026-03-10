@@ -1,7 +1,7 @@
 package ui
 
 import (
-	"claude-env-manager/internal/model"
+	"github.com/fleqing/claude-env-manager/internal/model"
 	"fmt"
 
 	tea "github.com/charmbracelet/bubbletea"

@@ -2,7 +2,7 @@ package parser
 
 import (
 	"bufio"
-	"claude-env-manager/internal/model"
+	"github.com/fleqing/claude-env-manager/internal/model"
 	"fmt"
 	"os"
 	"regexp"

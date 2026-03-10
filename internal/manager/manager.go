@@ -1,9 +1,9 @@
 package manager
 
 import (
-	"claude-env-manager/internal/config"
-	"claude-env-manager/internal/model"
-	"claude-env-manager/internal/parser"
+	"github.com/fleqing/claude-env-manager/internal/config"
+	"github.com/fleqing/claude-env-manager/internal/model"
+	"github.com/fleqing/claude-env-manager/internal/parser"
 	"fmt"
 	"os"
 	"path/filepath"
